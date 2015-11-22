@@ -2,9 +2,8 @@ require 'bundler/setup'
 require 'json'
 require 'nokogiri'
 
+require_relative '../lib/episode'
 require_relative '../lib/http_client'
-
-class Episode < Struct.new(:season, :episode, :title); end
 
 tvdb_series_id = ARGV[0]
 tvdb_series_url = "http://thetvdb.com/?id=#{tvdb_series_id}&tab=seasonall"
@@ -16,7 +15,7 @@ doc.css('table#listtable tr').each do |row|
   cells = row.css('td')
 
   if cells.size < 2
-    puts "Skipped table row: #{row}"
+    $stderr.puts "Skipped table row: #{row}"
     next
   end
 
@@ -29,7 +28,7 @@ doc.css('table#listtable tr').each do |row|
 
     episodes << Episode.new(season, episode, title)
   else
-    puts "Skipped table row: #{row}"
+    $stderr.puts "Skipped table row: #{row}"
   end
 end
 
