@@ -10,7 +10,7 @@ class HttpClient
   private
 
   def cache_file_path(cache_key)
-    File.join File.dirname(__FILE__), '../tmp/cache', cache_key
+    File.join File.dirname(__FILE__), '../cache', cache_key
   end
 
   def cache_key(url)
